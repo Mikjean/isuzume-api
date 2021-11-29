@@ -5,6 +5,7 @@ from django.contrib.auth.models import (
     AbstractBaseUser, BaseUserManager, PermissionsMixin)
 
 from django.db import models
+from django.db.models.fields import CharField, GenericIPAddressField
 from rest_framework_simplejwt.tokens import RefreshToken
 
 
@@ -62,3 +63,112 @@ class User(AbstractBaseUser, PermissionsMixin):
             'refresh': str(refresh),
             'access': str(refresh.access_token)
         }
+
+
+# class Patient(models.Model):
+#     user = models.ForeignKey(User)
+#     patient_id = models.CharField(max_length=15, null=True)
+#     first_name = models.CharField(max_length=40, null=True)
+#     second_name = models.CharField(max_length=65, null=True)
+#     date_of_birth = models.DateField()
+#     gender = models.CharField(max_length=65)
+#     phone_number = models.IntegerField()
+#     address = models.IntegerField(max_length=60)
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
+
+#     def __str__(self):
+#         return self.first_name
+
+
+# class Doctor(models.Model):
+#     user = models.ForeignKey(User)
+#     prefix = models.CharField()
+#     specialist = models.Choices()
+#     status = models.BooleanField(default=True)
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
+
+#     def __str__(self):
+#         return self.user
+
+# class Insurance(models.Model):   
+#     name = models.CharField(max_length=150)
+#     address = models.CharField(max_length=500)
+#     contacts = models.CharField(max_length=1000)
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
+
+#     def __str__(self):
+#         return self.name
+
+
+# class Laboratory(models.Model):   
+#     name = models.CharField(max_length=150)
+#     contacts = models.CharField(max_length=1000)
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
+
+#     def __str__(self):
+#         return self.name
+
+
+# class Hospital(models.Model):
+#     laboratory = models.ForeignKey(Laboratory)   
+#     name = models.CharField(max_length=150)
+#     address = models.CharField(max_length=500)
+#     contacts = models.CharField(max_length=1000)
+#     description = models.TimeField()
+#     district = models.Choices()
+#     province = models.BooleanField(default=True)
+#     is_public = models.BooleanField(default=True)
+#     accepted_insurance = models.ForeignKey(Insurance)
+
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
+
+#     def __str__(self):
+#         return self.name
+
+
+
+# class DoctorTimeTable(models.Model):
+#     doctor = models.ForeignKey(User)
+#     hospital = models.ForeignKey(Hospital)
+#     schedule_id = models.CharField()
+#     schedule_date = models.Choices()
+#     start_time = models.BooleanField(default=True)
+#     end_time_time = models.BooleanField(default=True)
+#     status = models.BooleanField(default=True)
+
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
+
+#     def __str__(self):
+#         return self.doctor
+
+# class Appoitment(models.Model):
+#     doctor = models.ForeignKey(Doctor)
+#     patient = models.ForeignKey(Patient)
+#     appoitment_id = models.CharField()
+#     reason = models.CharField(max_length=500)
+#     doctor_comment = models.CharField(max_length=1000)
+#     appoitment_time = models.TimeField()
+#     appoitment_date = models.Choices()
+#     status = models.BooleanField(default=True)
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
+
+#     def __str__(self):
+#         return self.appoitment_id
+
+
+
+
+
+
+
+
+
+
+
