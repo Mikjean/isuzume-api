@@ -41,7 +41,7 @@ class RegisterView(generics.GenericAPIView):
             ' Use the link below to verify your email \n' + absurl
         data = {'email_body': email_body, 'to_email': user.email,
                 'email_subject': 'Verify your email'}
-        print(token)
+        print(absurl)
 
         Util.send_email(data)
         return Response(user_data, status=status.HTTP_201_CREATED)
@@ -72,7 +72,7 @@ class verifyEmail(views.APIView):
         except jwt.ExpiredSignatureError as identifier:
             return Response({'error': 'Activation Expired'}, status=status.HTTP_400_BAD_REQUEST)
         except jwt.exceptions.DecodeError as identifier:
-            print('failed')
+            # print('failed')
             return Response({'error': 'Invalid token'}, status=status.HTTP_400_BAD_REQUEST)
 
 class LoginAPIView(generics.GenericAPIView):
@@ -118,6 +118,7 @@ class PasswordTokenCheckAPI(generics.GenericAPIView):
     serializer_class = SetNewPasswordSerializer
     def get(self, request, uidb64, token):
         redirect_url = request.GET.get('redirect_url')
+        print (redirect_url)
         try:
             id = smart_str(urlsafe_base64_decode(uidb64))
             user = User.objects.get(id=id)
