@@ -41,10 +41,11 @@ class RegisterView(generics.GenericAPIView):
             ' Use the link below to verify your email \n' + absurl
         data = {'email_body': email_body, 'to_email': user.email,
                 'email_subject': 'Verify your email'}
-        print(absurl)
+        # print(absurl)
 
         Util.send_email(data)
         return Response(user_data, status=status.HTTP_201_CREATED)
+        
 
 
 class verifyEmail(views.APIView):
@@ -150,6 +151,9 @@ class SetNewPasswordAPIView(generics.GenericAPIView):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         return Response({'success': True, 'message': 'Password reset success'}, status=status.HTTP_200_OK)
+
+
+
 
 
 class LogoutAPIView(generics.GenericAPIView):

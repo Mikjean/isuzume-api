@@ -15,11 +15,12 @@ class DoctorListView(ListCreateAPIView):
 
 
 class DoctorDetailView(RetrieveUpdateAPIView):
-    serializer_class = DoctorSerializer
+    serializer_class = DoctorDetailSerializer
     queryset = Doctor.objects.all()
-    permission = [permissions.AllowAny]
-
+    
     lookup_field = "id"
+    lookup_url_kwarg='id'
+    permission = [permissions.AllowAny]
     
 
 class PatientListView(ListCreateAPIView):
@@ -49,10 +50,10 @@ class InsuranceDetailView(RetrieveUpdateAPIView):
 class AppoitmentListView(ListCreateAPIView):
     serializer_class = AppoitmentSerializer
     queryset = Appoitment.objects.all()
-    permission = [permissions.IsAuthenticated]
+    permission = [permissions.IsAuthenticatedOrReadOnly]
 
-    def perform_create(self, serializer):
-        return serializer.save(user = self.request.user)
+    # def perform_create(self, serializer):
+    #     return serializer.save(patient = self.request.user)
 
     # def get_queryset(self):
     #     return self.queryset.filter(doctor=self.request.user)

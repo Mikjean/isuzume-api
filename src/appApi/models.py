@@ -22,35 +22,6 @@ class Patient(models.Model):
         return self.user
 
 
-class Doctor(models.Model):
-
-    SPECIALITIES = [
-        ('genecologist', 'genecologist'),
-        ('pediatrician', 'pediatrician'),
-        ('ophtamologist', 'ophtamologist'),
-        ('generalist', 'generalist')
-        ]
-
-
-    PREFIXES = [
-        ('Dr', 'Doctor'),
-        ('PTA', 'Pediatrician'),
-        ('PSo', 'Psycologist'),
-        ('Gdr', 'generalist')
-        ]
-        
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    prefix = models.CharField(max_length=15, choices=PREFIXES, default=None)
-    description = models.TextField(max_length=500)
-    specialist = models.CharField(max_length=40, choices=SPECIALITIES)
-    status = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.user
-
-
 class Laboratory(models.Model):   
     name = models.CharField(max_length=150)
     contacts = models.CharField(max_length=1000)
@@ -81,6 +52,35 @@ class Hospital(models.Model):
 
     def __str__(self):
         return self.name
+
+class Doctor(models.Model):
+
+    SPECIALITIES = [
+        ('genecologist', 'genecologist'),
+        ('pediatrician', 'pediatrician'),
+        ('ophtamologist', 'ophtamologist'),
+        ('generalist', 'generalist')
+        ]
+
+
+    PREFIXES = [
+        ('Dr', 'Doctor'),
+        ('PTA', 'Pediatrician'),
+        ('PSo', 'Psycologist'),
+        ('Gdr', 'generalist')
+        ]
+        
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    hospital = models.ForeignKey(Hospital, on_delete=models.CASCADE, null=True, blank=True)
+    prefix = models.CharField(max_length=15, choices=PREFIXES, default=None)
+    description = models.TextField(max_length=500)
+    specialist = models.CharField(max_length=40, choices=SPECIALITIES)
+    status = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.user
 
 
 class DoctorTimeTable(models.Model):

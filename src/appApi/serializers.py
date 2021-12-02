@@ -3,10 +3,38 @@ from .models import *
 from .serializers import *
 
 
+
+class HospitalSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Hospital
+        fields = '__all__'
+
+        
 class DoctorSerializer(serializers.ModelSerializer):
+    user = serializers.SerializerMethodField()
+    url = serializers.HyperlinkedIdentityField(view_name='doctor-detail',lookup_field = 'id')
     class Meta:
         model = Doctor
-        fields = '__all__'
+        fields = ['id','prefix','user','url','description','specialist', 'status']
+    
+    def get_user(self, obj):
+        return str(obj.user.username)
+
+class DoctorDetailSerializer(serializers.ModelSerializer):
+    user = serializers.SerializerMethodField()
+    hospital = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Doctor
+        fields = ['id','prefix','user','description','specialist', 'status', 'hospital']
+
+    def get_user(self, obj):
+        return str(obj.user.username)
+
+    def get_hospital(self,obj):
+        return HospitalSerializer(obj.hospital_set.all(),many=True).data
+
+    
 
 
 class PatientSerializer(serializers.ModelSerializer):
@@ -25,10 +53,7 @@ class AppoitmentSerializer(serializers.ModelSerializer):
         model = Appoitment
         fields = '__all__'
 
-class HospitalSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Hospital
-        fields = '__all__'
+
 
 class LaboratorySerializer(serializers.ModelSerializer):
     class Meta:
