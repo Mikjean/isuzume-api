@@ -37,20 +37,18 @@ class DoctorDetailSerializer(serializers.ModelSerializer):
         return HospitalSerializer(obj.hospital,many=True).data
 
 class DoctorAppoitmentsSerializer(serializers.ModelSerializer):
-    user = serializers.SerializerMethodField()
-    appoitments = serializers.SerializerMethodField()
-    # hospitals = Doctor.hospital_id
-    # print(HospitalSerializer(hospitals))
-
+    # user = serializers.SerializerMethodField()
+    # appoitments = serializers.SerializerMethodField()
+   
     class Meta:
         model = Appoitment
-        fields = ['id','prefix','user','description','specialist', 'status', 'hospitals']
+        fields = ['doctor','patient']
 
-    def get_user(self, obj):
-        return str(obj.user.username)
+    # def get_user(self, obj):
+    #     return str(obj.user.username)
 
-    def get_hospitals(self,obj):
-        return HospitalSerializer(obj.hospital,many=True).data
+    def get_appoitments(self,obj):
+        return AppoitmentSerializer(obj.objects.all(),many=True).data
 
     
 

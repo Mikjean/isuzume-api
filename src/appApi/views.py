@@ -8,6 +8,7 @@ from rest_framework import permissions
 from .permissions import IsDoctor, IsOwner
 from rest_framework import permissions
 from rest_framework.views import APIView
+from rest_framework.generics import GenericAPIView
 
 # Create your views here.
 class DoctorListView(ListCreateAPIView):
@@ -23,6 +24,20 @@ class DoctorDetailView(RetrieveUpdateAPIView):
     lookup_field = "id"
     lookup_url_kwarg='id'
     permission = [permissions.AllowAny]
+
+class DoctorAppoitmenstView(GenericAPIView):
+    serializer_class = AppoitmentSerializer
+    def get(self, request):        
+        user = request.user      
+
+        if user:
+            appoitments = Appoitment.objects.filter(doctor=user.id)
+            data = {'user': user.username,'appoitments': appoitments }
+            return Response(data, status=status.HTTP_200_OK)
+
+            # SEND RES
+        return Response({'message': 'aunauthorised access'}, status=status.HTTP_401_UNAUTHORIZED)
+
     
 
 class PatientListView(ListCreateAPIView):
@@ -112,9 +127,8 @@ class DoctorTimeTableDetailView(RetrieveUpdateAPIView):
     def get_queryset(self):
         return self.queryset.filter(doctor=self.request.user)
 
-class DoctorAppoitmentsView(ListCreateAPIView):
-        
-    pass
+
+
 
 
 
