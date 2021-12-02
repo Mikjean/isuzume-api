@@ -108,7 +108,6 @@ class Appoitment(models.Model):
 
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    appoitment_id = models.CharField(max_length=15)
     reason = models.CharField(max_length=500)
     doctor_comment = models.CharField(max_length=1000)
     lab_comments = models.CharField(max_length=1000)

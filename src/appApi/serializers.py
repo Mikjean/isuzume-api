@@ -9,7 +9,7 @@ class HospitalSerializer(serializers.ModelSerializer):
         model = Hospital
         fields = '__all__'
 
-        
+
 class DoctorSerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField()
     url = serializers.HyperlinkedIdentityField(view_name='doctor-detail',lookup_field = 'id')
@@ -22,17 +22,35 @@ class DoctorSerializer(serializers.ModelSerializer):
 
 class DoctorDetailSerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField()
-    hospital = serializers.SerializerMethodField()
+    hospitals = serializers.SerializerMethodField()
+    # hospitals = Doctor.hospital_id
+    # print(HospitalSerializer(hospitals))
 
     class Meta:
         model = Doctor
-        fields = ['id','prefix','user','description','specialist', 'status', 'hospital']
+        fields = ['id','prefix','user','description','specialist', 'status', 'hospitals']
 
     def get_user(self, obj):
         return str(obj.user.username)
 
-    def get_hospital(self,obj):
-        return HospitalSerializer(obj.hospital_set.all(),many=True).data
+    def get_hospitals(self,obj):
+        return HospitalSerializer(obj.hospital,many=True).data
+
+class DoctorAppoitmentsSerializer(serializers.ModelSerializer):
+    user = serializers.SerializerMethodField()
+    appoitments = serializers.SerializerMethodField()
+    # hospitals = Doctor.hospital_id
+    # print(HospitalSerializer(hospitals))
+
+    class Meta:
+        model = Appoitment
+        fields = ['id','prefix','user','description','specialist', 'status', 'hospitals']
+
+    def get_user(self, obj):
+        return str(obj.user.username)
+
+    def get_hospitals(self,obj):
+        return HospitalSerializer(obj.hospital,many=True).data
 
     
 
@@ -64,6 +82,9 @@ class DoctorTimeTableSerializer(serializers.ModelSerializer):
     class Meta:
         model = DoctorTimeTable
         fields = '__all__'
+
+# class DoctorAppoitmentSerializer(serializers.ModelSerializer):
+#     pass
 
 
         

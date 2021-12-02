@@ -1,11 +1,13 @@
 from django.shortcuts import render
 import rest_framework
+from rest_framework import status
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateAPIView
 from rest_framework.response import Response
 from .serializers import *
 from rest_framework import permissions
 from .permissions import IsDoctor, IsOwner
 from rest_framework import permissions
+from rest_framework.views import APIView
 
 # Create your views here.
 class DoctorListView(ListCreateAPIView):
@@ -109,6 +111,10 @@ class DoctorTimeTableDetailView(RetrieveUpdateAPIView):
 
     def get_queryset(self):
         return self.queryset.filter(doctor=self.request.user)
+
+class DoctorAppoitmentsView(ListCreateAPIView):
+        
+    pass
 
 
 

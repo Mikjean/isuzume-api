@@ -16,6 +16,8 @@ urlpatterns = [
     path('hospitals/', HospitalListView.as_view(), name="all-hospitals"),
     path('hospital/<str:id>', HospitalDetailView.as_view(), name="hospital-detail"),
     path('labolatories/', HospitalListView.as_view(), name="all-hospitals"),
-    path('labolator/<str:id>', HospitalDetailView.as_view(), name="hospital-detail"),    
+    path('labolator/<str:id>', HospitalDetailView.as_view(), name="hospital-detail"),
+    # path('doctor/appoitments/', DoctorAppoitmentsView.as_view(), name="doctor-appotments"),    
+
     
 ]
