@@ -32,6 +32,21 @@ class UserManager(BaseUserManager):
         user.save()
         return user
 
+    
+    #Creates and saves a staff user with the given email and password.    
+    def create_staffuser(self, username, email, password=None):
+        if password is None:
+            raise TypeError('Password should not be none')
+
+        user = self.create_user(
+            username,
+            email,
+            password=password,
+        )
+        user.is_staff = True
+        user.save(using=self._db)
+        return user
+
 
 # AUTH_PROVIDERS = {'facebook': 'facebook', 'google': 'google','twitter': 'twitter', 'email': 'email'}
 

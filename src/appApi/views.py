@@ -64,7 +64,8 @@ class AppoitmentDetailView(RetrieveUpdateAPIView):
     permission = [permissions.IsAuthenticated| IsOwner | IsDoctor]
     
     def get_queryset(self):
-        return self.queryset.filter(doctor=self.request.user)
+        return self.queryset.filter(doctor=self.request.user) | self.queryset.filter(user=self.request.user)
+        
 
 class HospitalListView(ListCreateAPIView):
     serializer_class = HospitalSerializer

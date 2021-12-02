@@ -98,6 +98,14 @@ class DoctorTimeTable(models.Model):
         return self.doctor
 
 class Appoitment(models.Model):
+
+    APPOITMENT_STATUS = [
+        ('booked', 'booked'),
+        ('pending', 'pending'),
+        ('approved', 'approved'),
+        ('completed', 'completed')
+        ]
+
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     appoitment_id = models.CharField(max_length=15)
@@ -105,7 +113,7 @@ class Appoitment(models.Model):
     doctor_comment = models.CharField(max_length=1000)
     lab_comments = models.CharField(max_length=1000)
     appoitment_time = models.DateField()
-    status = models.BooleanField(default=True)
+    status = models.CharField(choices=APPOITMENT_STATUS,max_length=25,default='booked')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
