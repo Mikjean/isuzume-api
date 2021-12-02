@@ -165,8 +165,7 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 
 
 #faceboook auth credentials
-#5194604853887650 facebook app id
-#abf76693d45f647d44ed1c9f9d60b797 app_secret
+
 SOCIAL_AUTH_FACEBOOK_KEY = ""
 SOCIAL_AUTH_FACEBOOK_SECRET = ""
 
