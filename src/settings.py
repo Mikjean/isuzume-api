@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-k0_af!e=hf&ei#9+5p7#oms@jo#3bzmy88rqho^%1r8&)7r%$$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['isuzume-apiv1.herokuapp.com', 'localhost','127.0.0.1']
 
 
 # Application definition
@@ -58,6 +58,7 @@ SWAGGER_SETTINGS = {
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    # 'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -137,7 +138,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Cairo'
 
 USE_I18N = True
 
@@ -180,7 +181,14 @@ SOCIAL_AUTH_TWITTER_KEY = ""
 SOCIAL_AUTH_TWITTER_SECRET = ""
 
 
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+# STATIC_URL = '/static/'
+# STATICFILES_DIRS = ( os.path.join(BASE_DIR, 'static'),)
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# MEDIA_URL = '/img/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'static') #server set up
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
