@@ -13,13 +13,12 @@ class Insurance(models.Model):
 
 class Patient(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE )
-    insurance = models.ForeignKey(Insurance, on_delete=models.CASCADE)
-    patient_id = models.CharField(max_length=15, null=True)    
+    insurance = models.ForeignKey(Insurance, on_delete=models.CASCADE)   
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.user
+        return self.user.username
 
 
 class Laboratory(models.Model):   
@@ -35,18 +34,18 @@ class Laboratory(models.Model):
 class Hospital(models.Model):
 
     PROVINCES = [
-        ('North', 'Doctor'),
+        ('North', 'North'),
         ('East', 'East'),
         ('West', 'West'),
         ('South', 'South')
         ]
-    laboratory = models.ForeignKey(Laboratory, on_delete=models.CASCADE)   
-    name = models.CharField(max_length=150)
-    description = models.TextField(max_length=500)
-    district = models.CharField(max_length=50)
-    province = models.CharField(max_length=55, choices=PROVINCES)
-    is_public = models.BooleanField(default=True)
-    accepted_insurance = models.ForeignKey(Insurance, on_delete=models.CASCADE)
+    laboratory = models.ForeignKey(Laboratory, on_delete=models.CASCADE, default=None)   
+    name = models.CharField(max_length=150,null=True, blank=True)
+    description = models.TextField(max_length=500,null=True, blank=True)
+    district = models.CharField(max_length=50,null=True, blank=True)
+    province = models.CharField(max_length=55, choices=PROVINCES, null=True, blank=True)
+    is_public = models.BooleanField(default=False,null=True, blank=True)
+    accepted_insurance = models.ForeignKey(Insurance, on_delete=models.CASCADE, default=None,null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -80,7 +79,7 @@ class Doctor(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.user
+        return self.user.username
 
 
 class DoctorTimeTable(models.Model):
@@ -106,16 +105,16 @@ class Appoitment(models.Model):
         ('completed', 'completed')
         ]
 
-    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    reason = models.CharField(max_length=500)
-    doctor_comment = models.CharField(max_length=1000)
-    lab_comments = models.CharField(max_length=1000)
-    appoitment_time = models.DateField()
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE,null=True, blank=True)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE,null=True, blank=True)
+    reason = models.CharField(max_length=500, null=True, blank=True)
+    doctor_comment = models.CharField(max_length=1000,null=True, blank=True)
+    lab_comments = models.CharField(max_length=1000,null=True, blank=True)
+    appoitment_time = models.DateField(null=True, blank=True)
     status = models.CharField(choices=APPOITMENT_STATUS,max_length=25,default='booked')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.appoitment_id
+        return self.reason
 

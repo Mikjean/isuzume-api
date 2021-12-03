@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from rest_framework import generics, status, views,permissions
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateAPIView
+
 
 from isuzumeApi.models import User
-from .serializers import UserRegisterSerializer, EmailVerificationSerializer, LoginSerializer, ResetPasswordEmailRequestSerializer, SetNewPasswordSerializer, LogoutSerializer
+from .serializers import UserProfileSerializer, UserRegisterSerializer, EmailVerificationSerializer, LoginSerializer, ResetPasswordEmailRequestSerializer, SetNewPasswordSerializer, LogoutSerializer
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from .utils import Util
@@ -168,3 +170,12 @@ class LogoutAPIView(generics.GenericAPIView):
         serializer.save()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+class UserProfileAPIView(RetrieveUpdateAPIView):
+    serializer_class = UserProfileSerializer
+    queryset = User.objects.all()
+    lookup_field = "id"
+    lookup_url_kwarg='id'
+    permission = [permissions.AllowAny]
+    permission = [permissions.IsAuthenticatedOrReadOnly]
+

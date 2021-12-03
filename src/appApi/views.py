@@ -30,13 +30,34 @@ class DoctorAppoitmenstView(GenericAPIView):
     def get(self, request):        
         user = request.user      
 
-        if user:
+        if not user:
             appoitments = Appoitment.objects.filter(doctor=user.id)
             data = {'user': user.username,'appoitments': appoitments }
             return Response(data, status=status.HTTP_200_OK)
 
             # SEND RES
         return Response({'message': 'aunauthorised access'}, status=status.HTTP_401_UNAUTHORIZED)
+
+class DoctorPatientsView(GenericAPIView):
+    serializer_class = PatientSerializer
+    def get(self, request):        
+        # user = request.user 
+        # # print(user)
+        # patient = Patient.objects.get(patient=1)
+        # print(patient)
+
+        # if patient:
+        #     print('there is') 
+        #     # patients = appoitments.patient_set.all() 
+        #     # for app in patients:
+        #     appoitments = patient.appoitment_set.all()
+        #     print(patient.appoitment_set.all())        
+
+        #     data = {'user': user.username,'appoitments': AppoitmentSerializer(appoitments).data, }
+        #     return Response(data, status=status.HTTP_200_OK)
+
+            # SEND RES
+        return Response({'message': 'you have no patients yet '}, status=status.HTTP_200_OK)
 
     
 
@@ -51,6 +72,8 @@ class PatientDetailView(RetrieveUpdateAPIView):
     queryset = Patient.objects.all()
     lookup_field = "id"
     permission = [permissions.IsAuthenticated]
+
+
 
 
 class InsuranceListView(ListCreateAPIView):

@@ -15,9 +15,12 @@ urlpatterns = [
     path('appoitment/<str:id>', AppoitmentDetailView.as_view(), name="appoitment-detail"),
     path('hospitals/', HospitalListView.as_view(), name="all-hospitals"),
     path('hospital/<str:id>', HospitalDetailView.as_view(), name="hospital-detail"),
-    path('labolatories/', HospitalListView.as_view(), name="all-hospitals"),
+    path('laboratories/', LaboratoryListView.as_view(), name="all-hospitals"),
     path('labolator/<str:id>', HospitalDetailView.as_view(), name="hospital-detail"),
-    path('doctor/appoitments/', DoctorAppoitmenstView.as_view(), name="doctor-appotments"),    
+    path('doctor/appoitments/', DoctorAppoitmenstView.as_view(), name="doctor-appotments"), 
+    path('doctor/patients/', DoctorPatientsView.as_view(), name="doctor-appotments"), 
+
+       
 
     
 ]
